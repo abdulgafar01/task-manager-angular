@@ -62,3 +62,13 @@
 .spacer {
   flex: 1 1 auto;
 }
+
+.delete-button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #888;
+}

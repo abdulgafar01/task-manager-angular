@@ -36,6 +36,23 @@ export class TaskService {
     this.save(updated);
   }
 
+  //  Update an existing task (title/description/status)
+  // commented out the updateTask method as it is not used currently
+  // updateTask(id: string, updatedFields: Partial<Task>) {
+  //   const updated = this.getSnapshot().map((t) =>
+  //     t.id === id ? { ...t, ...updatedFields } : t
+  //   );
+  //   this.tasks$.next(updated);
+  //   this.save(updated);
+  // }
+
+  //  Delete a task
+  deleteTask(id: string) {
+    const updated = this.getSnapshot().filter((t) => t.id !== id);
+    this.tasks$.next(updated);
+    this.save(updated);
+  }
+
   private load(): Task[] {
     try {
       const raw = localStorage.getItem(this.storageKey);

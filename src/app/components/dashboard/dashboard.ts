@@ -27,6 +27,11 @@ export class Dashboard implements OnInit {
   inProgress$!: Observable<Task[]>;
   done$!: Observable<Task[]>;
 
+
+  editingTaskId: string | null = null;
+  editedTitle = '';
+  editedDescription = '';
+
   constructor(private taskService: TaskService, private router: Router) {}
 
   ngOnInit() {
@@ -46,4 +51,11 @@ export class Dashboard implements OnInit {
   goToCreate() {
     this.router.navigate(['/create']);
   }
+
+  deleteTask(id: string) {
+    if (confirm('Are you sure you want to delete this task?')) {
+      this.taskService.deleteTask(id);
+    }
+  }
+
 }

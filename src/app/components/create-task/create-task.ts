@@ -34,7 +34,7 @@ export class CreateTask {
   form: FormGroup = new FormGroup({
     title: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.maxLength(80)],
+      validators: [Validators.required, Validators.maxLength(20)],
     }),
     description: new FormControl<string>('', {
       nonNullable: true,
