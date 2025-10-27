@@ -1,0 +1,95 @@
+<mat-toolbar color="primary">
+  <span>Task Dashboard</span>
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="goToCreate()" aria-label="Create new task">
+    <mat-icon>add</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="board">
+  <!-- === Column: New Task === -->
+  <section class="column">
+    <h3>New Task</h3>
+    <div
+    cdkDropList
+    id="newList"
+    [cdkDropListConnectedTo]="['inProgressList', 'doneList']"
+    [cdkDropListData]="(newTasks$ | async) ?? []"
+    class="dropList"
+    (cdkDropListDropped)="drop($event, 'inprogress')"
+    >
+      @if (newTasks$ | async; as newTasks) {
+        @if (newTasks.length === 0) {
+          <p class="empty">No new tasks</p>
+        } @else {
+          @for (task of newTasks; track task.id) {
+            <div cdkDrag [cdkDragData]="task">
+              <mat-card class="task-card create">
+            
+                <mat-card-title>{{ task.title }}</mat-card-title>
+                <mat-card-content>{{ task.description }}</mat-card-content>
+              </mat-card>
+            </div>
+          }
+        }
+      }
+    </div>
+  </section>
+
+  <!-- === Column: In Progress === -->
+  <section class="column">
+    <h3>In Progress</h3>
+    <div
+    id="inProgressList"
+    [cdkDropListConnectedTo]="['newList', 'doneList']"
+      cdkDropList
+      [cdkDropListData]="(inProgress$ | async) ?? []"
+      class="dropList"
+      (cdkDropListDropped)="drop($event, 'inprogress')"
+    >
+      @if (inProgress$ | async; as inProgress) {
+        @if (inProgress.length === 0) {
+          <p class="empty">No tasks in progress</p>
+        } @else {
+          @for (task of inProgress; track task.id) {
+            <div cdkDrag [cdkDragData]="task">
+              <mat-card class="task-card progress">
+                 <mat-icon>delete</mat-icon>
+                <mat-card-title>{{ task.title }}</mat-card-title>
+                <mat-card-content>{{ task.description }}</mat-card-content>
+              </mat-card>
+            </div>
+          }
+        }
+      }
+    </div>
+  </section>
+
+  <!-- === Column: Done === -->
+  <section class="column">
+    <h3>Done</h3>
+    <div
+    id="doneList"
+    [cdkDropListConnectedTo]="['newList', 'inProgressList']"
+      cdkDropList
+      [cdkDropListData]="(done$ | async) ?? []"
+      class="dropList"
+      (cdkDropListDropped)="drop($event, 'done')"
+    >
+      @if (done$ | async; as done) {
+        @if (done.length === 0) {
+          <p class="empty">No completed tasks</p>
+        } @else {
+          @for (task of done; track task.id) {
+            <div cdkDrag [cdkDragData]="task">
+              <mat-card class="task-card done">
+                <mat-card-title>{{ task.title }}</mat-card-title>
+                <mat-card-content>{{ task.description }}</mat-card-content>
+              </mat-card>
+            </div>
+          }
+        }
+      }
+    </div>
+  </section>
+</div>

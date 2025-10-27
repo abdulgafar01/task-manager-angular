@@ -1,0 +1,19 @@
+.container {
+  max-width: 520px;
+  margin: 24px auto;
+  padding: 5px 12px;
+}
+mat-toolbar{
+  margin:  auto;
+  width: 150px;
+  font-size: 30px;
+}
+
+.full { width: 100%; }
+mat-card { padding: 40px; }
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+}

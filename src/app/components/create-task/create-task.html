@@ -1,0 +1,56 @@
+
+<mat-toolbar color="primary">
+  <span>Create Task</span>
+</mat-toolbar>
+<div class="container">
+  <mat-card>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Task Title</mat-label>
+        <input matInput placeholder="Enter task title" formControlName="title" />
+
+                @if (title?.invalid && title?.touched) {
+                @if (title?.hasError('required')) {
+                    <mat-error>Title is required</mat-error>
+                }
+                @if (title?.hasError('maxlength')) {
+                    <mat-error>Max 80 characters</mat-error>
+                }
+                }
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Task Description (max 15 words)</mat-label>
+        <textarea
+          matInput
+          rows="4"
+          placeholder="Enter short task description"
+          formControlName="description"
+        ></textarea>
+
+                @if (description?.invalid && description?.touched) {
+                @if (description?.hasError('required')) {
+                    <mat-error>Description is required</mat-error>
+                }
+                @if (description?.hasError('maxWords')) {
+                    <mat-error>
+                    Max {{ description?.errors?.['maxWords']?.max }} words (got
+                    {{ description?.errors?.['maxWords']?.actual }})
+                    </mat-error>
+                }
+                }
+
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-stroked-button type="button" (click)="goToDashboard()">
+          Cancel
+        </button>
+        <button mat-flat-button color="primary" type="submit">
+          Create
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>
